@@ -6,7 +6,6 @@ import me.wiefferink.errorsink.common.EventEditor;
 import org.apache.logging.log4j.core.LogEvent;
 
 public class ServerInformation extends EventEditor {
-
 	private String serverVersion;
 
 	public ServerInformation() {
@@ -18,6 +17,7 @@ public class ServerInformation extends EventEditor {
 		// Server information
 		builder.withTag("API", serverVersion);
 		builder.withExtra("Online players", ErrorSink.getPlugin().getOnlinePlayers());
+		builder.withExtra("Online player details", ErrorSink.getPlugin().getOnlinePlayerLocation());
 		ErrorSink.getPlugin().addExtraData(builder);
 	}
 

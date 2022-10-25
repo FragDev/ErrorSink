@@ -1,26 +1,20 @@
 package me.wiefferink.errorsink.common;
-
 import io.sentry.event.EventBuilder;
 import ninja.leaping.configurate.ConfigurationNode;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.LogEvent;
-
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
+import java.util.TreeMap;
 
 public interface ErrorSinkPlugin {
 
     String getServerName();
-
     String getRelease();
-
     void increaseMessageSent();
-
     Map<List<Object>, EventRuleMatcher> getMatcherMap();
-
     ConfigurationNode getPluginConfig();
-
     /**
      * Match a rule to an event
      *
@@ -39,19 +33,20 @@ public interface ErrorSinkPlugin {
             Log.error(matcherPath);
             return null;
         }
-
         return matcher.matches(message, level, throwable, threadName, loggerName);
     }
-
     default long getTimeStamp(LogEvent event) {
         return event.getTimeMillis();
     }
 
     SortedMap<String, String> getLoadedPlugins();
 
+    default SortedMap<String, PlayerDetail> getOnlinePlayerLocation() {
+        return new TreeMap<>();
+    };
+
     String getServerVersion();
 
     int getOnlinePlayers();
-
     void addExtraData(EventBuilder builder);
 }
